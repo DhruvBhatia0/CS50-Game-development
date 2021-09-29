@@ -139,6 +139,9 @@ end
 ]]
 function love.mousepressed(x, y, button)
     love.mouse.buttonsPressed[button] = true
+    --[[if button == 1 then
+        love.event.quit()
+    end]]
 end
 
 --[[
