@@ -23,11 +23,20 @@ function PlayState:init()
     self.timer = 0
     self.score = 0
     self.pipe_variation = 1
+    self.paused = false
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
+    self.pause_img = love.graphics.newImage('pause.png')
 end
 
 function PlayState:update(dt)
+    if love.keyboard.wasPressed('p') or love.mouse.wasPressed(2) then
+        self.paused = not self.paused
+        sounds['explosion']:play()
+    end
+    if self.paused then
+        return
+    end
     -- update timer for pipe spawning
     self.timer = self.timer + dt
 
@@ -103,6 +112,9 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    if self.paused then
+        love.graphics.draw(self.pause_img, 95, 20, 0, 0.7, 0.7)
+    end
     for k, pair in pairs(self.pipePairs) do
         pair:render()
     end
