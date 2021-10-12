@@ -29,7 +29,7 @@ function PlayState:enter(params)
     self.ball = params.ball
     self.level = params.level
 
-    self.recoverPoints = 5000
+    self.recoverPoints = 500
 
     -- give ball random starting velocity
     self.ball.dx = math.random(-200, 200)
@@ -168,6 +168,8 @@ function PlayState:update(dt)
     if self.ball.y >= VIRTUAL_HEIGHT then
         self.health = self.health - 1
         gSounds['hurt']:play()
+        self.paddle.size = math.max(self.paddle.size-1, 1)
+        self.paddle.width = 32*self.paddle.size
 
         if self.health == 0 then
             gStateMachine:change('game-over', {
@@ -194,6 +196,9 @@ function PlayState:update(dt)
 
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
+    end
+    if love.keyboard.wasPressed('m') then
+        gSounds['music']:stop()
     end
 end
 

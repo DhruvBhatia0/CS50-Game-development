@@ -54,6 +54,9 @@ function ServeState:update(dt)
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
+    if love.keyboard.wasPressed('m') then
+        gSounds['music']:stop()
+    end
 end
 
 function ServeState:render()
